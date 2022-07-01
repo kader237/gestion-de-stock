@@ -44,4 +44,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    function isMagasinier(){
+        if($this->isAdminExist()){
+            return $this->admin->type == "magasinier";
+        }
+        return false;
+    }
+
+    function isAdmin(){
+        if($this->isAdminExist()){
+            return $this->admin->type == "admin";
+        }
+        return false;
+    }
+
+    function isChef(){
+        if($this->isAdminExist()){
+            return $this->admin->type == "chef";
+        }
+        return false;
+    }
+    function isAdminExist(){
+        return $this->admin->exists();
+    }
+    public function admin(){
+        return $this->hasOne(Personnel::class);
+    }
 }

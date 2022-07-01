@@ -1,0 +1,31 @@
+*1) SUM.ADD(10)   et  SUM.ADD(1,45)
+
+2)  creare Type Tadresse as Object(
+    numero int,
+    ville varchar(40),
+    code_postale varchar(40),
+    rue varchar(30)
+);
+
+create Type Tcandidat as Object(
+    nom varchar(30) , pennom varchar(30) , age int , adresse Tadresse
+) not FINAL;
+
+create Type TcandidatRegulier as Object UNDER Tcandidat(
+    ecole varchar(40),
+    uniforme varchar(20)
+);
+create Type TcandidatLibre as Object UNDER Tcandidat(
+    profession varchar(40),
+    disponibilite boolean
+);
+
+3) create TABLE candidatRegulier of TcandidatRegulier;
+    create TABLE candidatLibre of Tcandidatlibre;
+
+4) ordre :
+on cree un objet adresse ensuite l'objet candidat enfin l'objet candidatRegulier
+
+5)
+a) select * from candidatRegulier c where c.candidat.adresse.ville = 'Douala';
+b) select c.candidat.adresse.ville from candidatLibre c where c.candidat.age > 21;

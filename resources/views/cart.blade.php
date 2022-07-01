@@ -2,38 +2,31 @@
 
 @section('main')
     <h2>Votre Panier</h2>
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <td>#</td>
-            <td>Nom du Produit</td>
-            <td>Quantite</td>
-            <td>Prix Unitaire</td>
-            <td>Prix Total</td>
-            <td>Images </td>
-            <td>Actions</td>
 
-        </thead>
-        <tbody>
+        <div class="row">
             @foreach ($items as $item)
-                <tr>
-                    <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $item->nom }}</td>
-                    <td>{{ $item->qte }}</td>
-                    <td>{{ $item->pu }}</td>
-                    <td>{{ $item->pt }}</td>
-                    <td> <img src="{{ asset('storage/' . $item->img1) }}" class="img img-thumbnail img-fluid" width="200">
-                    </td>
-                    <td>
-                        <form action="{{ route('produit.cart.delete', ['id' => $item->id]) }}" method="post"> @csrf <button
-                                type="submit" class="btn btn-danger">Delete</button></form>
-                    </td>
-                </tr>
+                <div class="col col-4">
+                    <div class="card ">
+                        <div class="card-header">
+                           <span class="badge bg-dark"> #{{ $loop->index + 1 }}</span>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ asset('storage/' . $item->img1) }}" class="img-card  img-fluid" >
+                        <div>
+                            <span class="badge bg-info"> Nom: {{ $item->nom }}</span>
+                        <span class="badge bg-dark" >Quantite: {{ $item->qte }}</span>
+                        <span class="badge bg-dark" >Prix Unitaire: {{ $item->pu }}</span>
+                        <span class="badge bg-dark">Prix a payer: {{ $item->pt }}</span>
+                        </div>
+                        </div>
+                        <div class="card-footer">
+                            <form action="{{ route('produit.cart.delete', ['id' => $item->id]) }}" method="post"> @csrf <button
+                                    type="submit" class="btn btn-danger">Delete</button></form>
+                            </div>
+                    </div>
+                </div>
             @endforeach
-        </tbody>
-        <tfoot>
-
-        </tfoot>
-    </table>
+        </div>
 
     <hr>
     <div>

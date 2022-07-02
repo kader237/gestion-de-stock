@@ -66,7 +66,9 @@ class User extends Authenticatable
         return false;
     }
     function isAdminExist(){
-        return $this->admin->exists();
+        if($this->admin == null)
+            return false;
+        $this->admin->exists();
     }
     public function admin(){
         return $this->hasOne(Personnel::class);

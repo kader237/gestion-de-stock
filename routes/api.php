@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::get("/commande/{id}/stat",function(Request $request,$id){
+
+    $user_id = $request->user_id;
+    $res = DB::table('commandes')->selectRaw("SUM('prix') as prix , year(created_at) as mois")->get();
+    if($res == null)
+        $res = [];
+    else
+        $res = $res->toArray();
+
+    return response()->json($res);
 });

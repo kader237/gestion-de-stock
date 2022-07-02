@@ -79,7 +79,9 @@ class ProduitController extends Controller
     }
     function cart(){
         $cart = session("cart",[]);
-        $index = array_keys($cart);
+
+        if($cart != null){
+            $index = array_keys($cart);
         $items = [];
         $pt = 0;
         foreach($index as $i){
@@ -96,5 +98,7 @@ class ProduitController extends Controller
             $pt = $pt+$tmp->pt;
         }
         return view("cart",compact("items","pt"));
+        }
+        return redirect()->route("home")->withMessage("Desole votre Panier est vide");
     }
 }

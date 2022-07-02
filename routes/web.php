@@ -3,14 +3,17 @@
 use Inertia\Inertia;
 use App\Models\Produit;
 use Nette\Utils\Arrays;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\View\View;
 use Nette\Utils\ArrayList;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProduitController;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\View\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +25,11 @@ use Illuminate\View\View;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get("/test",function(){
-    dd(auth()->user()->admin()->exists());
-});
+Route::get("/test",[MailController::class,"sendMail"]);
 
 Route::get('/', function () {
+    // $user_id = 1;
+    // /*  */$res = DB::table("commandes")->selectRaw("sum(prix) as prix , date_format(created_at,'%M') as mois ")->groupByRaw("created_at,month(created_at),user_id")->having("user_id","=",$user_id)->first(["mois","prix","user_id"]);
     return view('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -41,11 +44,7 @@ Route::get('/AdminDashboard', function () {
 
 })->middleware(['auth', 'verified',"admin"])->name('dashboard');
 
-Route::get("/ClientDashboard",function(){
-
-    return Inertia::render("Dashboard");
-
-})->name("ClientDashboard");
+Route::get("/ClientDashboard",[HomeController::class,"dashboard"])->name("ClientDashboard");
 
 Route::get("/produit",function(){
     $produit = Produit::all();
@@ -53,7 +52,7 @@ Route::get("/produit",function(){
 })->name("produit.index");
 
 Route::post("produit/cart/{id}/delete",function($id){
-    $cart = session("cart");
+    $cart = session("cart",[]);
     $ncart=[];
     foreach(array_keys($cart) as $c){
         if($c!=$id){

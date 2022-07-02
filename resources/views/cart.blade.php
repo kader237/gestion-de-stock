@@ -10,8 +10,8 @@
                         <div class="card-header">
                            <span class="badge bg-dark"> #{{ $loop->index + 1 }}</span>
                         </div>
-                        <div class="card-body">
-                            <img src="{{ asset('storage/' . $item->img1) }}" class="img-card  img-fluid" >
+                        <div class="card-body text-center">
+                            <img src="{{ asset('storage/' . $item->img1) }}" class="img-card img-fluid " width="100" style="max-width: 200px">
                         <div>
                             <span class="badge bg-info"> Nom: {{ $item->nom }}</span>
                         <span class="badge bg-dark" >Quantite: {{ $item->qte }}</span>

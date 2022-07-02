@@ -14,10 +14,12 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">Dashboard</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Se deconnecter</a></li>
+                        <li><form method="post" action="{{ route("logout") }}" >
+                            @csrf
+                            <button class="dropdown-item" type="submit">Se deconnecter</button>
+                        </form></li>
                     </ul>
                 </li>
-
                 <li class="nav-item @if(Route::is('dashboard')) active border @endif"><a class="nav-link" href="{{ route("dashboard") }}">Dashboard</a></li>
 
             </ul>

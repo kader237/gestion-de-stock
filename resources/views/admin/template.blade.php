@@ -21,7 +21,7 @@
         <!-- Bootstrap core JS-->
         <script src="http://code.jquery.com/jquery-2.0.3.min.js" ></script>
 	    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/bootstrap.bundle.js"></script>
         <!-- Core theme JS-->
         <script src="/js/scripts.js"></script>
     </body>

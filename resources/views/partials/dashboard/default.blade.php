@@ -76,7 +76,7 @@
                 ],
                 datasets: [{
                     label: 'Total depense',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: {{ (json_encode(array_values($tab_month))) }},
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -93,12 +93,16 @@
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 3
+                    borderWidth: 1
                 }]
             },
+            options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
         });
     </script>
 @endpush
-
-select created_at, prix, COUNT(*) as TotalCount from produits where created_at >= '2022-01-01' and created_at
-<= '2022-12-31' group by created_at, prix

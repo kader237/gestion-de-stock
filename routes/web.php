@@ -1,20 +1,11 @@
 <?php
-
-use Inertia\Inertia;
 use App\Models\Produit;
-use Nette\Utils\Arrays;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\View\View;
-use Nette\Utils\ArrayList;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProduitController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +16,12 @@ use App\Http\Controllers\ProduitController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get("/luc",function(){
+    $produit = Produit::all();
+    $pdf = PDF::loadHtml("<h1>Merci d'avoir telechager </h1>");
+    return $pdf->loadFIle(public_path("app/luc.html"))->save("luc.pdf")->stream("lucas.pdf");
+
+});
 Route::get("/test",[MailController::class,"sendMail"]);
 
 Route::get('/', function () {
@@ -93,6 +90,13 @@ Route::group(
     Route::post('produit',[ProduitController::class,"store"])
                 ->name("produit.store");
 
+});
+
+Route::middleware("auth")->group(function (){
+    Route::post("/produit/buy",function(Request $req){
+        dump($req->all());
+        dd(session()->get("cart"));
+    })->name("produit.buy");
 });
 
 Route::get("/admin",function(){

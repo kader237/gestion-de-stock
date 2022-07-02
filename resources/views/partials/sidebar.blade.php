@@ -13,13 +13,18 @@
 
                 <li class="mx-2 nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Comptes</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><form method="post" action="{{ route("logout") }}" >
-                            @csrf
-                            <button class="dropdown-item" type="submit">Se deconnecter</button>
-                        </form></li>
+                    <ul class="dropdown-menu dropdown-menu-end text-centerP" aria-labelledby="navbarDropdown">
+                        <li>
+                            @auth
+                            <form method="post" action="{{ route("logout") }}" class="text-center" >
+                                @csrf
+                                <button class="btn btn-danger " type="submit">Se deconnecter</button>
+                            </form>
+                            @endauth
+                            @guest
+                                <a href="{{ route("login") }}" class="btn btn-success " type="submit">Se connecter</a>
+                            @endguest
+                    </li>
 
                     </ul>
                 </li>

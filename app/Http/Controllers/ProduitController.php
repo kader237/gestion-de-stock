@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produit;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Contracts\Session\Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route as RoutingRoute;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session as FacadesSession;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use stdClass;
+use  PDF;
 
 class ProduitController extends Controller
 {
@@ -100,5 +99,34 @@ class ProduitController extends Controller
         return view("cart",compact("items","pt"));
         }
         return redirect()->route("home")->withMessage("Desole votre Panier est vide");
+    }
+    public function buy(Request $request){
+        // je genere la facture du client
+
+        $commande = new stdClass;
+        if($data = $request->input("number_money")){
+            $commande->numero = $data;
+        }
+        $commande->mode_paiement = $request->get("mode_paiement");
+        $commande->date_commande = Carbon::now()->toDateString();
+        $commande->pt = $request->prix_total;
+        $produit = [];
+
+        foreach(array_keys(session()->get("cart")) as $v){
+            $tmp = DB::table('produits')->select(["prix","nom"])->where("id","=",$v)->first();
+            $tmp->quantite = session()->get("cart.$v");
+            $tmp->pt = $tmp->prix * $tmp->quantite ;
+            $produit[] = $tmp;
+
+        }
+        $commande->produits = $produit;
+        $pdf = App::make("dompdf.wrapper");
+        $facture = $pdf->loadView("facture",compact("commande"));
+        $stream = $facture->stream("facture de ".auth()->user()->name.".pdf");
+        // je libere ma session
+        session()->forget("cart");
+        return $stream;
+
+        return redirect()->route("home")->withMessage("commande effectuer avec success");
     }
 }

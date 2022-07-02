@@ -93,10 +93,7 @@ Route::group(
 });
 
 Route::middleware("auth")->group(function (){
-    Route::post("/produit/buy",function(Request $req){
-        dump($req->all());
-        dd(session()->get("cart"));
-    })->name("produit.buy");
+    Route::post("/produit/buy",[ProduitController::class,"buy"])->name("produit.buy");
 });
 
 Route::get("/admin",function(){

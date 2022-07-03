@@ -1,4 +1,6 @@
 <?php
+
+use App\Events\BuyBillEvent;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,10 +19,7 @@ use App\Http\Controllers\ProduitController;
 |
 */
 Route::get("/luc",function(){
-    $produit = Produit::all();
-    $pdf = PDF::loadHtml("<h1>Merci d'avoir telechager </h1>");
-    return $pdf->loadFIle(public_path("app/luc.html"))->save("luc.pdf")->stream("lucas.pdf");
-
+    event(new BuyBillEvent(auth()->user(),new stdClass));
 });
 Route::get("/test",[MailController::class,"sendMail"]);
 

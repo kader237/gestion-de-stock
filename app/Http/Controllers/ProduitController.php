@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produit;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use stdClass;
 use  PDF;
+use stdClass;
+use Carbon\Carbon;
+use App\Models\Produit;
+use App\Events\BuyBillEvent;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class ProduitController extends Controller
 {
@@ -103,7 +104,8 @@ class ProduitController extends Controller
     public function buy(Request $request){
         // je genere la facture du client
 
-        $commande = new stdClass;
+        if(session()->get("cart") !== null){
+            $commande = new stdClass;
         if($data = $request->input("number_money")){
             $commande->numero = $data;
         }
@@ -111,22 +113,27 @@ class ProduitController extends Controller
         $commande->date_commande = Carbon::now()->toDateString();
         $commande->pt = $request->prix_total;
         $produit = [];
-
+        $cart = session()->get("cart");
         foreach(array_keys(session()->get("cart")) as $v){
-            $tmp = DB::table('produits')->select(["prix","nom"])->where("id","=",$v)->first();
+            $tmp = DB::table('produits')->select(["prix","nom","quantite"])->where("id","=",$v)->first();
+            DB::table("produits")->where("id",$v)->update(["quantite"=>$tmp->quantite - $cart[$v]]);
             $tmp->quantite = session()->get("cart.$v");
             $tmp->pt = $tmp->prix * $tmp->quantite ;
             $produit[] = $tmp;
-
         }
+        // j'enregistre ma commande
+
+        // j'envoi un mail
         $commande->produits = $produit;
         $pdf = App::make("dompdf.wrapper");
         $facture = $pdf->loadView("facture",compact("commande"));
-        $stream = $facture->stream("facture de ".auth()->user()->name.".pdf");
-        // je libere ma session
-        session()->forget("cart");
-        return $stream;
+        $stream = $facture->download("facture de ".auth()->user()->name.".pdf");
 
-        return redirect()->route("home")->withMessage("commande effectuer avec success");
+        event(new BuyBillEvent(auth()->user(),$commande,$stream));
+
+        session()->forget("cart");
+        return redirect()->route("home")->with("message","l'email a ete envoye avec success");
+        }else
+            return redirect()->back();
     }
 }

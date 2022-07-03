@@ -106,6 +106,7 @@ return [
     | of the emails. Or, you may simply stick with the Laravel defaults!
     |
     */
+    'reply_to' => ['address' => 'example@example.com', 'name' => 'App Name'],
 
     'markdown' => [
         'theme' => 'default',

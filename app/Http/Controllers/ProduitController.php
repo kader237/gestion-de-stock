@@ -99,7 +99,7 @@ class ProduitController extends Controller
         }
         return view("cart",compact("items","pt"));
         }
-        return redirect()->route("home")->withMessage("Desole votre Panier est vide");
+        return redirect()->route("home")->with("message.success","Desole votre Panier est vide");
     }
     public function buy(Request $request){
         // je genere la facture du client
@@ -120,6 +120,15 @@ class ProduitController extends Controller
             $tmp->quantite = session()->get("cart.$v");
             $tmp->pt = $tmp->prix * $tmp->quantite ;
             $produit[] = $tmp;
+            DB::table("commandes")->insert([
+               "user_id"=>auth()->user()->id,
+               "numero" => uniqid(),
+               "moyen"=>$commande->mode_paiement,
+               "prix"=>$tmp->pt,
+               "created_at"=>$commande->date_commande,
+               "quantite"=>$tmp->quantite,
+               "produit_id"=>$v
+            ]);
         }
         // j'enregistre ma commande
 
@@ -132,7 +141,7 @@ class ProduitController extends Controller
         event(new BuyBillEvent(auth()->user(),$commande,$stream));
 
         session()->forget("cart");
-        return redirect()->route("home")->with("message","l'email a ete envoye avec success");
+        return redirect()->route("home")->with("message.success","l'email a ete envoye avec success");
         }else
             return redirect()->back();
     }

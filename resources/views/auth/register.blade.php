@@ -19,6 +19,26 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
+            {{-- Ville --}}
+            <div class="mt-4">
+                <x-label for="ville" :value="__('Ville')"/>
+                <x-input id="ville" class="block mt-1 w-full" type="text" name="ville" :value="old('ville')" required  />
+
+            </div>
+
+            {{-- prenom --}}
+            <div class="mt-4">
+                <x-label for="prenom" :value="__('Prenom')"/>
+                <x-input id="prenom" class="block mt-1 w-full" type="text" name="prenom" :value="old('prenom')" required  />
+            </div>
+
+            {{-- Telephone --}}
+            <div class="mt-4">
+                <x-label for="tel" :value="__('Telephone')"/>
+                <x-input id="tel" class="block mt-1 w-full" type="tel" name="tel" :value="old('tel')" required  />
+
+            </div>
+
             <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />

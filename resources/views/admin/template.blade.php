@@ -11,6 +11,13 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/css/styles.css" rel="stylesheet" />
         <link rel="stylesheet" href="/css/bootstrap.css">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+        </style>
     </head>
     <body>
         @include("partials.navbar")

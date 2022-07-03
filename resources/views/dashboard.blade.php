@@ -2,7 +2,6 @@
 
 @section("main")
 
-
         @if (auth()->user()->isAdminExist())
         <h2 class="text-right label bg-error p-4">
             Vous etes connecter en tant que <b class="badge bg-dark text-uppercase p-2"> {{ auth()->user()->admin->type }} </b>

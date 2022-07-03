@@ -1,4 +1,4 @@
-@extends('template')
+    @extends('template')
 
 @section('main')
     <h2>Votre Panier </h2>
@@ -112,37 +112,37 @@
             }
         </style>
     @endpush
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    @endpush
-    @push('scripts')
-        <script>
-            const vm = new Vue({
-                el: "#app",
-                data() {
-                    return {
-                        showableNumberMoney: false,
-                        msg: "dede",
-                        items: [
-                            "Orange Money",
-                            "Mtn Money",
-                            "Cash"
-                        ],
-                        item: null,
-                    }
-                },
-                mounted() {},
-                watch: {
-                    item(elt) {
-                        if (elt == "orange money" || elt == "mtn money") {
-                            this.showableNumberMoney = true
-                        } else {
-                            this.showableNumberMoney = false
+        @push('scripts')
+            <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        @endpush
+        @push('scripts')
+            <script>
+                const vm = new Vue({
+                    el: "#app",
+                    data() {
+                        return {
+                            showableNumberMoney: false,
+                            msg: "dede",
+                            items: [
+                                "Orange Money",
+                                "Mtn Money",
+                                "Cash"
+                            ],
+                            item: null,
+                        }
+                    },
+                    mounted() {},
+                    watch: {
+                        item(elt) {
+                            if (elt == "orange money" || elt == "mtn money") {
+                                this.showableNumberMoney = true
+                            } else {
+                                this.showableNumberMoney = false
 
+                            }
                         }
                     }
-                }
-            })
-        </script>
-    @endpush
+                })
+            </script>
+        @endpush
 @endsection

@@ -12,8 +12,12 @@
         "inertiajs/inertia-laravel": "^0.5.4",
         "laravel/breeze": "^1.9",
         "laravel/framework": "^8.75",
+        "laravel/nexmo-notification-channel": "^3.0",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.5",
+        "laravel/vonage-notification-channel": "^3.0",
+        "nexmo/laravel": "^3.0",
+        "symfony/mailer": "^6.1",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

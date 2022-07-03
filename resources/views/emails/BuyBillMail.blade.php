@@ -8,13 +8,13 @@ nous Vous remercions pour l'achat des produits que vous avez effectuer sur notre
 par <strong>{{ $commande->mode_paiement }}</strong>
 
 @component('mail::button', ['url' => "{{ $stream }}"])
-    Telecharger Sa Facture
+    Recevoir sa facture
 @endcomponent
 
 @component("mail::subcopy")
     by AbdoulCadri
 @endcomponent
 
-Nous VOus Remercions,<br>
+Nous Vous Remercions, et vous shouhaitons bonne continuations<br>
 {{ config('app.name') }}
 @endcomponent

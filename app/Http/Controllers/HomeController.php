@@ -14,7 +14,6 @@ class HomeController extends Controller
 
         $user_id = request()->user()->id;
         $data = new stdClass;
-
         $nb_commander = DB::table("commandes")->where("user_id","=",$user_id)->selectRaw(" count(*) as nb ")->first("nb");
         $data->nb_commandes = $nb_commander->nb;
         $total_price = DB::table("commandes")->selectRaw("SUM(prix) as prix")->where("user_id",$user_id)->first("prix")->prix;

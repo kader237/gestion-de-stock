@@ -13,7 +13,7 @@
 
                 <li class="mx-2 nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Comptes</a>
-                    <ul class="dropdown-menu dropdown-menu-end text-centerP" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="navbarDropdown">
                         <li>
                             @auth
                             <form method="post" action="{{ route("logout") }}" class="text-center" >
@@ -22,15 +22,14 @@
                             </form>
                             @endauth
                             @guest
-                                <a href="{{ route("login") }}" class="btn btn-success " type="submit">Se connecter</a>
+                                <a href="{{ route("register") }}" class="btn btn-info mb-4 w-75 mx-auto">S'inscrire</a>
+                                <a href="{{ route("login") }}" class="btn btn-success w-75" type="submit">Se connecter</a>
                             @endguest
                     </li>
 
                     </ul>
                 </li>
-
                 <li class="nav-item @if(Route::is('dashboard')) active border @endif"><a class="nav-link" href="{{ route("dashboard") }}">Dashboard</a></li>
-
             </ul>
         </div>
     </div>

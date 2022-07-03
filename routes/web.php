@@ -8,6 +8,10 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProduitController;
+use App\Models\User;
+use App\Notifications\testNotification;
+use Illuminate\Support\Facades\Notification;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +23,9 @@ use App\Http\Controllers\ProduitController;
 |
 */
 Route::get("/luc",function(){
-    event(new BuyBillEvent(auth()->user(),new stdClass));
+    $user = auth()->user();
+    $noti = $user->notify(new testNotification($user));
+    dd($noti);
 });
 Route::get("/test",[MailController::class,"sendMail"]);
 
@@ -34,11 +40,7 @@ Route::get('/', function () {
     ]);
 })->name("home");
 
-Route::get('/AdminDashboard', function () {
-
-    return view('dashboard');
-
-})->middleware(['auth', 'verified',"admin"])->name('dashboard');
+Route::get('/AdminDashboard', [HomeController::class,"dashboard"])->middleware(['auth', 'verified',"admin"])->name('dashboard');
 
 Route::get("/ClientDashboard",[HomeController::class,"dashboard"])->name("ClientDashboard");
 
@@ -102,3 +104,4 @@ Route::get("/admin",function(){
 Route::post("/produit/{id}/commander",[ProduitController::class,"commander"])->name("produit.commander")->middleware("auth");
 
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';

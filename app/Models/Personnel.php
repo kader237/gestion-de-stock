@@ -15,4 +15,8 @@ class Personnel extends Model
     protected $updated_at = false;
     protected $created_at = false;
 
+    function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }

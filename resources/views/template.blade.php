@@ -15,7 +15,7 @@
     </head>
     <body class="antialiased">
             @include("partials.sidebar")
-            <div class="max-w-6xl container mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-6xl container mx-auto sm:px-6 lg:px-8" id="main-container">
                 @yield("main")
             </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -22,7 +22,7 @@ class ProduitController extends Controller
             "prix"=>"integer|required",
             "image"=>"file|required",
             "image1"=>"file|required",
-            "quantite"=>"required|integer"
+            "quantite"=>"required"
         ]);
 
         $produit = new Produit();
@@ -66,6 +66,17 @@ class ProduitController extends Controller
         $produit = Produit::findOrFail($id);
         Storage::delete($produit->image);
         Storage::delete($produit->image1);
+        if($produit->entre != null){
+            $produit->entre->delete();
+        }
+        if($produit->sortie != null){
+            $produit->sortie->delete();
+        }
+        if($produit->commandes != null){
+            $produit->commandes->each(function($item){
+                $item->delete();
+            });
+        }
         $produit->delete();
         return redirect()->route("admin.produit.index")->withSuccess("produit supprimer avec success");
     }

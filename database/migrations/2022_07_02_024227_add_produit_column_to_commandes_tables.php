@@ -15,7 +15,7 @@ class AddProduitColumnToCommandesTables extends Migration
     {
         Schema::table('commandes', function (Blueprint $table) {
             //
-            $table->foreignId("produit_id")->constrained();
+            $table->foreignId("produit_id")->constrained()->cascadeOnDelete();
             $table->integer("quantite");
         });
     }

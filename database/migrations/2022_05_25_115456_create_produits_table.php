@@ -15,7 +15,6 @@ class CreateProduitsTable extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("produit_id")->constrained();
             $table->string("nom")->unique();
             $table->tinyInteger("quantitue")->default(0);
             $table->float("prix");

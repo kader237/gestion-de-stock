@@ -15,7 +15,6 @@ class CreateSortiesTable extends Migration
     {
         Schema::create('sorties', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->constrained();
             $table->foreignId("personnel_id")->constrained();
             $table->integer("quantite");
             $table->timestamps();

@@ -1,7 +1,10 @@
 @extends("admin.template")
 
 @section("main")
-    <a href="{{ route('admin.produit.create') }}" class="btn btn-success mt-4 float-end mb-4 d-block w-25 right"> creer un nouveau produit</a>
+@if (!auth()->user()->isChef())
+
+<a href="{{ route('admin.produit.create') }}" class="btn btn-success mt-4 float-end mb-4 d-block w-25 right"> creer un nouveau produit</a>
+                @endif
 <table class="table table-bordered">
         <h2 class="table-caption text-center">Liste des produits</h2>
         <thead>
@@ -14,7 +17,10 @@
                 <th colspan="2">
                     Images
                 </th>
+                @if (!auth()->user()->isChef())
+
                 <th>Actions</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -32,6 +38,8 @@
                         <img src="{{ asset('storage/'.$item->image1) }}" width="120" class="img img-fluid"/>
 
                     </td>
+                    @if (!auth()->user()->isChef())
+
                     <td>
                         <div class="btn-group">
                             <a href="{{route('admin.produit.edit',['id'=>$item->id])}}" class="btn btn-info">Modifier</a>
@@ -41,6 +49,7 @@
                             </form>
                         </div>
                     </td>
+                @endif
                 </tr>
             @endforeach
         </tbody>
